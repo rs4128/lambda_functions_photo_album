@@ -3,6 +3,8 @@ import datetime
 import boto3
 from botocore.vendored import requests
 
+
+
 elastic_status = True
 url = "https://search-photolabels-rrfomdeoz2rfoebk2erzvznb7q.us-east-1.es.amazonaws.com/photolabels/_doc"
 headers = {"Content-Type": "application/json"}
