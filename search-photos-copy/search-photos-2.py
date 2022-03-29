@@ -10,10 +10,12 @@ url = "https://search-photolabels-rrfomdeoz2rfoebk2erzvznb7q.us-east-1.es.amazon
 headers = {"Content-Type": "application/json"}
 auth = requests.auth.HTTPBasicAuth("yt2741", "Acbd_1234")
 
+#Added comment here
+
 def get_keywords_lex(event):
     keywords = []
     query = event["q"]
-    lex = boto3.client('lex-runtime')
+    lex = boto3.client('lex-runtime') 
     
     try:
     
