@@ -2,8 +2,7 @@ import json
 import boto3
 from botocore.vendored import requests
 import base64
-
-
+import random
 
 
 elastic_status = True
@@ -21,7 +20,7 @@ def get_keywords_lex(event):
         response = lex.post_text(
             botName="PhotoAlbum",
             botAlias="Prod",
-            userId="12",
+            userId=str(random.randint(10, 99)),
             inputText=query
         )
         
@@ -59,14 +58,20 @@ def match_elastic_search(query_key_words, elastic_status=False):
                                   }
                                 }
             }
+            print('query: ', query)
             
             r = requests.get(url, auth=auth, headers=headers, data=json.dumps(query))
+            print('Response: ', r.json())
             
             if 'hits' in r.json():
                 for result in r.json()['hits']['hits']:
                     temp_photos[i] = temp_photos[i].union(set([result["_source"]["objectKey"]]))
+                    print("temp: ", temp_photos)
         
-        matching_photos = temp_photos[0].intersection(temp_photos[1])
+        if len(query_key_words)==1:
+            matching_photos = temp_photos[0]
+        else:
+            matching_photos = temp_photos[0].intersection(temp_photos[1])
         
     except Exception as e:
         print("Error while retrieving data from elastic search")
@@ -93,6 +98,8 @@ def get_image_urls(photos):
 
 def lambda_handler(event, context):
     
+    print(event)
+    
     query_key_words = get_keywords_lex(event)
     print("Keywords: ", query_key_words)
     
@@ -101,6 +108,8 @@ def lambda_handler(event, context):
     image_urls = get_image_urls(matching_photos)
     
     #image_urls = get_image_urls(['pisa.jpeg', 'cm.jpeg'])
+    
+    print(image_urls)
     
     # TODO implement
     return {
