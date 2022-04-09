@@ -8,7 +8,7 @@ import random
 elastic_status = True
 url = "https://search-photolabels-rrfomdeoz2rfoebk2erzvznb7q.us-east-1.es.amazonaws.com/photolabels/_search"
 headers = {"Content-Type": "application/json"}
-auth = requests.auth.HTTPBasicAuth("yt2741", "Acbd_1234")
+auth = requests.auth.HTTPBasicAuth("", "")
 
 #Added comment here
 
